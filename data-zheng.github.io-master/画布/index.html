@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style>
+		  *{
+		  	margin: 2px;
+		  	padding: 0;
+		  }
+			 a{
+					 float: left;
+					 width: 14px;
+					 height: 14px;
+					 margin-left: 5px;
+			}
+			#width a{
+				width: 20px;
+				height: 1px;
+			}
+		</style>
+	</head>
+	<body>
+		<p>选择颜色</p>
+		<div id="color">			 
+			<a id="#f0f" style="background: #f0f;"></a>
+	        <a id="#ff0" style="background: #ff0;"></a>
+	        <a id="#f00" style="background: #f00;"></a>
+	        <a id="#0f0" style="background: #0f0;"></a>
+	        <a id="#00f" style="background: #00f;"></a>
+	        <a id="#999" style="background: #999;"></a>
+	        <a id="#000" style="background: #000;"></a>
+		</div>
+		<br />
+	    <p>橡皮擦</p>
+	      <div id="xiangpi">
+	      	<input type="button" id="#fff" value="点击获取橡皮擦" />
+	      </div>
+
+	    <p>字体大小</p>
+	      <div id="width">
+	      	 <a id="1" style="background: #000;"></a>
+	      	 <a id="3" style="background: #000; height: 2px;"></a>
+	      	 <a id="5" style="background: #000; height: 3px;"></a>
+	      	 <a id="7" style="background: #000; height: 4px;"></a>
+	      	 <a id="9" style="background: #000; height: 5px;"></a>
+	      	 <a id="11" style="background: #000; height: 6px;"></a>
+	      	 <a id="13" style="background: #000; height: 7px;"></a>
+	      </div>
+    <br />
+		<canvas width="500px;" height="500px;" id="myCanvas" style="border:  1px solid #CCC; margin-top: 10px;">			
+		</canvas>
+		
+	<script type="text/javascript" src="js/jquery-1.9.0.js" ></script>
+	<script>
+		 ;(function(){
+		 	    var isMousdeown=false;
+			 	var Canvas=document.getElementById("myCanvas");
+	            var cxt=Canvas.getContext("2d");
+	            var preX, perxY;
+	            var offset=$("#myCanvas").offset();
+	    
+	           
+		     $(function(){
+				   $("#color a").click(function(){
+				   	cxt.beginPath()
+				    cxt.strokeStyle=this.id;				    
+				   })
+				});
+				
+				$(function(){
+				   $("#xiangpi input").click(function(){
+				   	cxt.beginPath()
+				    cxt.strokeStyle="#fff";				    
+				   })
+				});
+               
+               $(function(){
+				   $("#width a").click(function(){
+				   	cxt.beginPath()
+				    cxt.lineWidth=this.id;				    
+				   })
+				});
+
+                   
+	         $("#myCanvas").on("mousedown",function(evt){	         	 
+	         	  isMousdeown=true;
+	         	  preX=evt.pageX - offset.left;
+	         	  preY=evt.pageY - offset.top;
+//	         	  alert(preY)
+//	         	  alert(preX)
+	         })
+			
+			 $("#myCanvas").on("mousemove",function(evt){
+			 	if(isMousdeown){
+			 	    	cxt.moveTo(preX,preY);
+			 	    	
+			 	    	var x=evt.pageX -offset.left;
+			 	    	var y=evt.pageY -offset.top;			 	    	
+			 	    	cxt.lineTo(x,y);
+			 	    	cxt.stroke()
+			 	    	preX=x;
+			 	    	preY=y;
+			 	}	 				 	
+			 })
+			 
+			 $("#myCanvas").on("mouseup",function(evt){
+			 	isMousdeown=false;
+			 })
+		 
+		 })();
+		
+	</script>
+	<script type="text/javascript" src="js/index.js" ></script>
+	</body>
+</html>
